@@ -49,10 +49,10 @@ def overall():
             print('No data found.')
             return
 
-        print('Player, Points')
-        for row in values:
+        #print('Player, Points')
+        #for row in values:
             # Print columns A and E, which correspond to indices 0 and 4.
-            print('%s, %s' % (row[0], row[1]))
+            #print('%s, %s' % (row[0], row[1]))
 
     except HttpError as err:
         print(err)
@@ -101,10 +101,10 @@ def bedwars():
             print('No data found.')
             return
 
-        print('Player, Points')
-        for row in values:
+        #print('Player, Points')
+        #for row in values:
             # Print columns A and E, which correspond to indices 0 and 4.
-            print('%s, %s' % (row[0], row[1]))
+            #print('%s, %s' % (row[0], row[1]))
 
     except HttpError as err:
         print(err)
@@ -153,10 +153,10 @@ def skywars():
             print('No data found.')
             return
 
-        print('Player, Points')
-        for row in values:
+        #print('Player, Points')
+        #for row in values:
             # Print columns A and E, which correspond to indices 0 and 4.
-            print('%s, %s' % (row[0], row[1]))
+            #print('%s, %s' % (row[0], row[1]))
 
     except HttpError as err:
         print(err)
@@ -205,10 +205,10 @@ def buildBattle():
             print('No data found.')
             return
 
-        print('Player, Points')
-        for row in values:
+        #print('Player, Points')
+        #for row in values:
             # Print columns A and E, which correspond to indices 0 and 4.
-            print('%s, %s' % (row[0], row[1]))
+            #print('%s, %s' % (row[0], row[1]))
 
     except HttpError as err:
         print(err)
@@ -257,10 +257,10 @@ def bridgeDuels():
             print('No data found.')
             return
 
-        print('Player, Points')
-        for row in values:
+        #print('Player, Points')
+        #for row in values:
             # Print columns A and E, which correspond to indices 0 and 4.
-            print('%s, %s' % (row[0], row[1]))
+            #print('%s, %s' % (row[0], row[1]))
 
     except HttpError as err:
         print(err)
@@ -309,10 +309,10 @@ def miniWalls():
             print('No data found.')
             return
 
-        print('Player, Points')
-        for row in values:
+        #print('Player, Points')
+        #for row in values:
             # Print columns A and E, which correspond to indices 0 and 4.
-            print('%s, %s' % (row[0], row[1]))
+            #print('%s, %s' % (row[0], row[1]))
 
     except HttpError as err:
         print(err)
@@ -361,10 +361,10 @@ def parkourDuels():
             print('No data found.')
             return
 
-        print('Player, Points')
-        for row in values:
+        #print('Player, Points')
+        #for row in values:
             # Print columns A and E, which correspond to indices 0 and 4.
-            print('%s, %s' % (row[0], row[1]))
+            #print('%s, %s' % (row[0], row[1]))
 
     except HttpError as err:
         print(err)
@@ -413,10 +413,10 @@ def partyGames():
             print('No data found.')
             return
 
-        print('Player, Points')
-        for row in values:
+        #print('Player, Points')
+        #for row in values:
             # Print columns A and E, which correspond to indices 0 and 4.
-            print('%s, %s' % (row[0], row[1]))
+            #print('%s, %s' % (row[0], row[1]))
 
     except HttpError as err:
         print(err)
@@ -465,10 +465,10 @@ def survivalGames():
             print('No data found.')
             return
 
-        print('Player, Points')
-        for row in values:
+        #print('Player, Points')
+        #for row in values:
             # Print columns A and E, which correspond to indices 0 and 4.
-            print('%s, %s' % (row[0], row[1]))
+            #print('%s, %s' % (row[0], row[1]))
 
     except HttpError as err:
         print(err)
@@ -517,10 +517,10 @@ def wobtafitv():
             print('No data found.')
             return
 
-        print('Player, Points')
-        for row in values:
+        #print('Player, Points')
+        #for row in values:
             # Print columns A and E, which correspond to indices 0 and 4.
-            print('%s, %s' % (row[0], row[1]))
+            #print('%s, %s' % (row[0], row[1]))
 
     except HttpError as err:
         print(err)
@@ -569,10 +569,10 @@ def uhcDuels():
             print('No data found.')
             return
 
-        print('Player, Points')
-        for row in values:
+        #print('Player, Points')
+        #for row in values:
             # Print columns A and E, which correspond to indices 0 and 4.
-            print('%s, %s' % (row[0], row[1]))
+            #print('%s, %s' % (row[0], row[1]))
 
     except HttpError as err:
         print(err)

@@ -6,10 +6,10 @@ from itertools import chain
 from matplotlib import pyplot as plt
 import numpy as np
 
-updateStats = False
+updateStats = True
 output = False
 graphAll = False
-graphTeams = False
+graphDifferentials = False
 
 if updateStats:
     from allSheets import *
@@ -267,7 +267,7 @@ for i in team4:
     pt = wobtafitvD.get(i)
     t4wobtafitv.append(pt)
 
-# Calculates game average points
+# Calculates game average points for each team
 overallPointAverages = [round(sum(t1overall)/4, 2), round(sum(t2overall)/4, 2), round(sum(t3overall)/4, 2), round(sum(t4overall)/4, 2)]
 bedwarsPointAverages = [round(sum(t1bedwars)/4, 2), round(sum(t2bedwars)/4, 2), round(sum(t3bedwars)/4, 2), round(sum(t4bedwars)/4, 2)]
 bridgeDuelsPointAverages = [round(sum(t1bridgeDuels)/4, 2), round(sum(t2bridgeDuels)/4, 2), round(sum(t3bridgeDuels)/4, 2), round(sum(t4bridgeDuels)/4, 2)]
@@ -280,7 +280,7 @@ survivalGamesPointAverages = [round(sum(t1survivalGames)/4, 2), round(sum(t2surv
 uhcDuelsPointAverages = [round(sum(t1uhcDuels)/4, 2), round(sum(t2uhcDuels)/4, 2), round(sum(t3uhcDuels)/4, 2), round(sum(t4uhcDuels)/4, 2)]
 wobtafitvPointAverages = [round(sum(t1wobtafitv)/4, 2), round(sum(t2wobtafitv)/4, 2), round(sum(t3wobtafitv)/4, 2), round(sum(t4wobtafitv)/4, 2)]
 
-# Combines averages
+# Combines each team's averages by gamemode
 overallAverages = [('Team 1', round(sum(t1overall)/4, 2)), ('Team 2', round(sum(t2overall)/4, 2)), ('Team 3', round(sum(t3overall)/4, 2)), ('Team 4', round(sum(t4overall)/4, 2))]
 bedwarsAverages = [('Team 1', round(sum(t1bedwars)/4, 2)), ('Team 2', round(sum(t2bedwars)/4, 2)), ('Team 3', round(sum(t3bedwars)/4, 2)), ('Team 4', round(sum(t4bedwars)/4, 2))]
 bridgeDuelsAverages = [('Team 1', round(sum(t1bridgeDuels)/4, 2)), ('Team 2', round(sum(t2bridgeDuels)/4, 2)), ('Team 3', round(sum(t3bridgeDuels)/4, 2)), ('Team 4', round(sum(t4bridgeDuels)/4, 2))]
@@ -366,26 +366,8 @@ t1Averages = np.round([sum(t1bedwars), sum(t1bridgeDuels), sum(t1buildBattle), s
 t2Averages = np.round([sum(t2bedwars), sum(t2bridgeDuels), sum(t2buildBattle), sum(t2miniWalls), sum(t2parkourDuels), sum(t2partyGames), sum(t2skywars), sum(t2survivalGames), sum(t2uhcDuels), sum(t2wobtafitv)])
 t3Averages = np.round([sum(t3bedwars), sum(t3bridgeDuels), sum(t3buildBattle), sum(t3miniWalls), sum(t3parkourDuels), sum(t3partyGames), sum(t3skywars), sum(t3survivalGames), sum(t3uhcDuels), sum(t3wobtafitv)])
 t4Averages = np.round([sum(t4bedwars), sum(t4bridgeDuels), sum(t4buildBattle), sum(t4miniWalls), sum(t4parkourDuels), sum(t4partyGames), sum(t4skywars), sum(t4survivalGames), sum(t4uhcDuels), sum(t4wobtafitv)])
-# Graphs!
-if graphTeams:
-    games = ['Bedwars', 'Bridge Duels', 'Build Battle', 'Mini Walls', 'Parkour Duels', 'Party Games', 'Skywars',
-             'Survival Games', 'UHC Duels', 'WOBTAFITV']
-    x = np.arange(len(games))
-    width = 0.35
-    fig, ax = plt.subplots()
-    rects1 = ax.bar(x - width / 2, allAverages, width, label='All')
-    rects2 = ax.bar(x + width / 2, t1Averages, width, label='Team 1')
-    ax.set_ylabel('')
-    ax.set_title('Team 1 vs. Average Points')
-    ax.set_xticks(x, games)
-    ax.legend()
-    ax.bar_label(rects1, padding=3)
-    ax.bar_label(rects2, padding=3)
-    fig.tight_layout()
-    plt.show()
 
-# Calculates advantages
-t1AboveAverage = []
+# Calculates advantages (point differentials)
 t1Differentials = [i - j for (i, j) in zip(t1Averages, allAverages)]
 t1DifferentialsZipped = list(zip(games, t1Differentials))
 t1DifferentialsZipped.sort(key = lambda x: x[1], reverse = True)
@@ -402,15 +384,17 @@ t4Differentials = [i - j for (i, j) in zip(t4Averages, allAverages)]
 t4DifferentialsZipped = list(zip(games, t4Differentials))
 t4DifferentialsZipped.sort(key = lambda x: x[1], reverse = True)
 
-fig, axs = plt.subplots(2, 2)
-fig.suptitle('Point Differentials for All Teams')
-fig.tight_layout()
-axs[0, 0].bar(shortGames, t1Differentials, color=['red'])
-axs[0, 0].set_title('Red Team')
-axs[0, 1].bar(shortGames, t2Differentials, color=['gold'])
-axs[0, 1].set_title('Yellow Team')
-axs[1, 0].bar(shortGames, t3Differentials, color=['green'])
-axs[1, 0].set_title('Green Team')
-axs[1, 1].bar(shortGames, t4Differentials, color=['blue'])
-axs[1, 1].set_title('Blue Team')
-plt.show()
+# Graphs point differentials
+if graphDifferentials:
+    fig, axs = plt.subplots(2, 2)
+    fig.suptitle('Point Differentials for All Teams')
+    fig.tight_layout()
+    axs[0, 0].bar(shortGames, t1Differentials, color=['red'])
+    axs[0, 0].set_title('Red Team')
+    axs[0, 1].bar(shortGames, t2Differentials, color=['gold'])
+    axs[0, 1].set_title('Yellow Team')
+    axs[1, 0].bar(shortGames, t3Differentials, color=['green'])
+    axs[1, 0].set_title('Green Team')
+    axs[1, 1].bar(shortGames, t4Differentials, color=['blue'])
+    axs[1, 1].set_title('Blue Team')
+    plt.show()
