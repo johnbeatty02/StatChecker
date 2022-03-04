@@ -6,12 +6,14 @@ from itertools import chain
 from matplotlib import pyplot as plt
 import numpy as np
 
-updateStats = False
-output = False
-graphAll = False
-graphDifferentials = True
-pvpGames = 6
-nonPvPGames = 4
+updateStats = False         # Refreshes the stats from the Google Sheet
+output = False              # Outputs each team's points in each mode to the console
+graphAll = True            # Graphs each team's stats for every gamemode
+printDifferentials = False  # Prints the expected point differentials
+graphDifferentials = True  # Graphs the expected point differentials
+pvpGames = 6                # Number of PvP games
+nonPvPGames = 4             # Number of non-PvP games
+colorOrder = ['red', 'gold', 'green', 'blue']
 
 if updateStats:
     from allSheets import *
@@ -128,6 +130,12 @@ uhcDuelsPoints = [i for i in uhcDuelsPoints if i[0] in playing]
 wobtafitvPoints = [i for i in wobtafitvPoints if i[0] in playing]
 pvpPoints = [i for i in pvpPoints if i[0] in playing]
 nonPvPPoints = [i for i in nonPvPPoints if i[0] in playing]
+
+# Catches inactive players
+allPoints = [overallPoints, bedwarsPoints, bridgeDuelsPoints, buildBattlePoints, miniWallsPoints, parkourDuelsPoints, partyGamesPoints, skywarsPoints, survivalGamesPoints, uhcDuelsPoints, wobtafitvPoints, pvpPoints, nonPvPPoints]
+for i in allPoints:
+    if None in i:
+        raise ValueError(f'Player is not in {i}!')
 
 # creates dictionaries for every game
 overallD = dict(overallPoints)
@@ -311,6 +319,7 @@ for i in team4:
     t4nonPvP.append(pt)
 
 # Calculates game average points for each team
+
 overallPointAverages = [round(sum(t1overall)/4, 2), round(sum(t2overall)/4, 2), round(sum(t3overall)/4, 2), round(sum(t4overall)/4, 2)]
 bedwarsPointAverages = [round(sum(t1bedwars)/4, 2), round(sum(t2bedwars)/4, 2), round(sum(t3bedwars)/4, 2), round(sum(t4bedwars)/4, 2)]
 bridgeDuelsPointAverages = [round(sum(t1bridgeDuels)/4, 2), round(sum(t2bridgeDuels)/4, 2), round(sum(t3bridgeDuels)/4, 2), round(sum(t4bridgeDuels)/4, 2)]
@@ -322,8 +331,8 @@ skywarsPointAverages = [round(sum(t1skywars)/4, 2), round(sum(t2skywars)/4, 2), 
 survivalGamesPointAverages = [round(sum(t1survivalGames)/4, 2), round(sum(t2survivalGames)/4, 2), round(sum(t3survivalGames)/4, 2), round(sum(t4survivalGames)/4, 2)]
 uhcDuelsPointAverages = [round(sum(t1uhcDuels)/4, 2), round(sum(t2uhcDuels)/4, 2), round(sum(t3uhcDuels)/4, 2), round(sum(t4uhcDuels)/4, 2)]
 wobtafitvPointAverages = [round(sum(t1wobtafitv)/4, 2), round(sum(t2wobtafitv)/4, 2), round(sum(t3wobtafitv)/4, 2), round(sum(t4wobtafitv)/4, 2)]
-pvpPointAverages = [round(sum(t1pvp)/(4*6), 2), round(sum(t2pvp)/(4*6), 2), round(sum(t3pvp)/(4*6), 2), round(sum(t4pvp)/(4*6), 2)]
-nonPvPPointAverages = [round(sum(t1nonPvP)/(4*4), 2), round(sum(t2nonPvP)/(4*4), 2), round(sum(t3nonPvP)/(4*4), 2), round(sum(t4nonPvP)/(4*4), 2)]
+pvpPointAverages = [round(sum(t1pvp)/(4*pvpGames), 2), round(sum(t2pvp)/(4*pvpGames), 2), round(sum(t3pvp)/(4*pvpGames), 2), round(sum(t4pvp)/(4*pvpGames), 2)]
+nonPvPPointAverages = [round(sum(t1nonPvP)/(4*nonPvPGames), 2), round(sum(t2nonPvP)/(4*nonPvPGames), 2), round(sum(t3nonPvP)/(4*nonPvPGames), 2), round(sum(t4nonPvP)/(4*nonPvPGames), 2)]
 
 # Combines each team's averages by gamemode
 overallAverages = [('Team 1', round(sum(t1overall)/4, 2)), ('Team 2', round(sum(t2overall)/4, 2)), ('Team 3', round(sum(t3overall)/4, 2)), ('Team 4', round(sum(t4overall)/4, 2))]
@@ -337,8 +346,8 @@ skywarsAverages = [('Team 1', round(sum(t1skywars)/4, 2)), ('Team 2', round(sum(
 survivalGamesAverages = [('Team 1', round(sum(t1survivalGames)/4, 2)), ('Team 2', round(sum(t2survivalGames)/4, 2)), ('Team 3', round(sum(t3survivalGames)/4, 2)), ('Team 4', round(sum(t4survivalGames)/4, 2))]
 uhcDuelsAverages = [('Team 1', round(sum(t1uhcDuels)/4, 2)), ('Team 2', round(sum(t2uhcDuels)/4, 2)), ('Team 3', round(sum(t3uhcDuels)/4, 2)), ('Team 4', round(sum(t4uhcDuels)/4, 2))]
 wobtafitvAverages = [('Team 1', round(sum(t1wobtafitv)/4, 2)), ('Team 2', round(sum(t2wobtafitv)/4, 2)), ('Team 3', round(sum(t3wobtafitv)/4, 2)), ('Team 4', round(sum(t4wobtafitv)/4, 2))]
-pvpAverages = [('Team 1', round(sum(t1pvp)/(4*6), 2)), ('Team 2', round(sum(t2pvp)/(4*6), 2)), ('Team 3', round(sum(t3pvp)/(4*6), 2)), ('Team 4', round(sum(t4pvp)/(4*6), 2))]
-nonPvPAverages = [('Team 1', round(sum(t1nonPvP)/(4*4), 2)), ('Team 2', round(sum(t2nonPvP)/(4*4), 2)), ('Team 3', round(sum(t3nonPvP)/(4*4), 2)), ('Team 4', round(sum(t4nonPvP)/(4*4), 2))]
+pvpAverages = [('Team 1', round(sum(t1pvp)/(4*pvpGames), 2)), ('Team 2', round(sum(t2pvp)/(4*pvpGames), 2)), ('Team 3', round(sum(t3pvp)/(4*pvpGames), 2)), ('Team 4', round(sum(t4pvp)/(4*6), 2))]
+nonPvPAverages = [('Team 1', round(sum(t1nonPvP)/(4*nonPvPGames), 2)), ('Team 2', round(sum(t2nonPvP)/(4*nonPvPGames), 2)), ('Team 3', round(sum(t3nonPvP)/(4*nonPvPGames), 2)), ('Team 4', round(sum(t4nonPvP)/(4*nonPvPGames), 2))]
 
 # Prints results
 if output:
@@ -362,29 +371,29 @@ if graphAll:
     fig, axs = plt.subplots(4, 3)
     fig.suptitle('Average Points for All Games')
     fig.tight_layout()
-    axs[0, 0].bar(labels, bedwarsPointAverages, color=['red', 'blue', 'green', 'gold'])
+    axs[0, 0].bar(labels, bedwarsPointAverages, color=colorOrder)
     axs[0, 0].set_title('Bedwars')
-    axs[0, 1].bar(labels, bridgeDuelsPointAverages, color=['red', 'blue', 'green', 'gold'])
+    axs[0, 1].bar(labels, bridgeDuelsPointAverages, color=colorOrder)
     axs[0, 1].set_title('Bridge Duels')
-    axs[1, 0].bar(labels, buildBattlePointAverages, color=['red', 'blue', 'green', 'gold'])
+    axs[1, 0].bar(labels, buildBattlePointAverages, color=colorOrder)
     axs[1, 0].set_title('Build Battle')
-    axs[1, 1].bar(labels, miniWallsPointAverages, color=['red', 'blue', 'green', 'gold'])
+    axs[1, 1].bar(labels, miniWallsPointAverages, color=colorOrder)
     axs[1, 1].set_title('Mini Walls')
-    axs[2, 0].bar(labels, parkourDuelsPointAverages, color=['red', 'blue', 'green', 'gold'])
+    axs[2, 0].bar(labels, parkourDuelsPointAverages, color=colorOrder)
     axs[2, 0].set_title('Parkour Duels')
-    axs[2, 1].bar(labels, partyGamesPointAverages, color=['red', 'blue', 'green', 'gold'])
+    axs[2, 1].bar(labels, partyGamesPointAverages, color=colorOrder)
     axs[2, 1].set_title('Party Games')
-    axs[0, 2].bar(labels, skywarsPointAverages, color=['red', 'blue', 'green', 'gold'])
+    axs[0, 2].bar(labels, skywarsPointAverages, color=colorOrder)
     axs[0, 2].set_title('Skywars')
-    axs[1, 2].bar(labels, survivalGamesPointAverages, color=['red', 'blue', 'green', 'gold'])
+    axs[1, 2].bar(labels, survivalGamesPointAverages, color=colorOrder)
     axs[1, 2].set_title('Survival Games')
-    axs[2, 2].bar(labels, uhcDuelsPointAverages, color=['red', 'blue', 'green', 'gold'])
+    axs[2, 2].bar(labels, uhcDuelsPointAverages, color=colorOrder)
     axs[2, 2].set_title('UHC Duels')
-    axs[3, 0].bar(labels, wobtafitvPointAverages, color=['red', 'blue', 'green', 'gold'])
+    axs[3, 0].bar(labels, wobtafitvPointAverages, color=colorOrder)
     axs[3, 0].set_title('WOBTAFITV')
-    axs[3, 1].bar(labels, pvpPointAverages, color=['red', 'blue', 'green', 'gold'])
+    axs[3, 1].bar(labels, pvpPointAverages, color=colorOrder)
     axs[3, 1].set_title('PvP')
-    axs[3, 2].bar(labels, nonPvPPointAverages, color=['red', 'blue', 'green', 'gold'])
+    axs[3, 2].bar(labels, nonPvPPointAverages, color=colorOrder)
     axs[3, 2].set_title('Non-PvP')
 
     for ax in axs.flat:  # Maintains spacing, titles get squished without this
@@ -442,12 +451,21 @@ if graphDifferentials:
     fig, axs = plt.subplots(2, 2)
     fig.suptitle('Point Differentials for All Teams')
     fig.tight_layout()
-    axs[0, 0].bar(shortGames, t1Differentials, color=['red'])
+    axs[0, 0].bar(shortGames, t1Differentials, color=colorOrder[0])
     axs[0, 0].set_title('Red Team')
-    axs[0, 1].bar(shortGames, t2Differentials, color=['gold'])
+    axs[0, 1].bar(shortGames, t2Differentials, color=colorOrder[1])
     axs[0, 1].set_title('Yellow Team')
-    axs[1, 0].bar(shortGames, t3Differentials, color=['green'])
+    axs[1, 0].bar(shortGames, t3Differentials, color=colorOrder[2])
     axs[1, 0].set_title('Green Team')
-    axs[1, 1].bar(shortGames, t4Differentials, color=['blue'])
+    axs[1, 1].bar(shortGames, t4Differentials, color=colorOrder[3])
     axs[1, 1].set_title('Blue Team')
     plt.show()
+if printDifferentials:
+    differentials = [sum(t1Differentials), sum(t2Differentials), sum(t3Differentials), sum(t4Differentials)]
+    print(differentials)
+t1AbsDiff = sum([abs(i) for i in t1Differentials])
+t2AbsDiff = sum([abs(i) for i in t2Differentials])
+t3AbsDiff = sum([abs(i) for i in t3Differentials])
+t4AbsDiff = sum([abs(i) for i in t4Differentials])
+absDiff = [t1AbsDiff, t2AbsDiff, t3AbsDiff, t4AbsDiff]
+print(absDiff)
