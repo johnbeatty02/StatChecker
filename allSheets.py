@@ -11,10 +11,10 @@ from googleapiclient.errors import HttpError
 
 # If modifying these scopes, delete the file token.json.
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly']
-SAMPLE_SPREADSHEET_ID = '1IB-wi64YG5ZfzmQxzBP984y3totkwf_ZhJ_tU9mJ38g'
+SAMPLE_SPREADSHEET_ID = '145HJJeFJVXH5fTLZ4_o2xNnRpVdk22mPsWEgSh7ObLk'
 
 def overall():
-    SAMPLE_RANGE_NAME = 'Main!C23:D51'
+    SAMPLE_RANGE_NAME = 'Main!C23:D52'
     """Shows basic usage of the Sheets API.
     Prints values from a sample spreadsheet.
     """
@@ -66,7 +66,7 @@ def overall():
 print('Updated Overall stats')
 
 def bedwars():
-    SAMPLE_RANGE_NAME = 'Bedwars!C22:D50'
+    SAMPLE_RANGE_NAME = 'Bedwars!C22:D51'
     """Shows basic usage of the Sheets API.
     Prints values from a sample spreadsheet.
     """
@@ -170,7 +170,7 @@ def skywars():
 print('Updated Skywars stats')
 
 def buildBattle():
-    SAMPLE_RANGE_NAME = 'Build Battle!C22:D50'
+    SAMPLE_RANGE_NAME = 'Build Battle!C22:D51'
     """Shows basic usage of the Sheets API.
     Prints values from a sample spreadsheet.
     """
@@ -222,7 +222,7 @@ def buildBattle():
 print('Updated Build Battle stats')
 
 def bridgeDuels():
-    SAMPLE_RANGE_NAME = 'Bridge Duels!C22:D50'
+    SAMPLE_RANGE_NAME = 'Bridge Duels!C22:D51'
     """Shows basic usage of the Sheets API.
     Prints values from a sample spreadsheet.
     """
@@ -326,7 +326,7 @@ def miniWalls():
 print('Updated Mini Walls stats')
 
 def parkourDuels():
-    SAMPLE_RANGE_NAME = 'Parkour Duels!C22:D50'
+    SAMPLE_RANGE_NAME = 'Parkour Duels!C22:D51'
     """Shows basic usage of the Sheets API.
     Prints values from a sample spreadsheet.
     """
@@ -430,7 +430,7 @@ def partyGames():
 print('Updated Party Games stats')
 
 def survivalGames():
-    SAMPLE_RANGE_NAME = 'Survival Games!C22:D50'
+    SAMPLE_RANGE_NAME = 'Survival Games!C22:D51'
     """Shows basic usage of the Sheets API.
     Prints values from a sample spreadsheet.
     """
@@ -586,7 +586,7 @@ def uhcDuels():
 print('Updated UHC Duels stats')
 
 def pvp():
-    SAMPLE_RANGE_NAME = 'PvP!C22:D50'
+    SAMPLE_RANGE_NAME = 'PvP!C22:D51'
     """Shows basic usage of the Sheets API.
     Prints values from a sample spreadsheet.
     """
@@ -638,7 +638,7 @@ def pvp():
 print('Updated PvP stats')
 
 def nonPvP():
-    SAMPLE_RANGE_NAME = 'Non-PvP!C22:D50'
+    SAMPLE_RANGE_NAME = 'Non-PvP!C22:D51'
     """Shows basic usage of the Sheets API.
     Prints values from a sample spreadsheet.
     """

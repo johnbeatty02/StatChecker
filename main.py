@@ -9,8 +9,9 @@ import numpy as np
 updateStats = False         # Refreshes the stats from the Google Sheet
 output = False              # Outputs each team's points in each mode to the console
 graphAll = True            # Graphs each team's stats for every gamemode
-printDifferentials = False  # Prints the expected point differentials
+printDifferentials = True  # Prints the expected point differentials
 graphDifferentials = True  # Graphs the expected point differentials
+displayGameAverages = False
 pvpGames = 6                # Number of PvP games
 nonPvPGames = 4             # Number of non-PvP games
 colorOrder = ['red', 'gold', 'green', 'blue']
@@ -20,8 +21,11 @@ if updateStats:
     reloadAll()
 
 games = ['Bedwars', 'Bridge Duels', 'Build Battle', 'Mini Walls', 'Parkour Duels', 'Party Games', 'Skywars',
-             'Survival Games', 'UHC Duels', 'WOBTAFITV', 'PvP', 'Non-PvP']
-shortGames = ['BW', 'BD', 'BB', 'MW', 'PD', 'PG', 'SW', 'SG', 'UD', 'WO', "PvP", 'nP']
+             #'Survival Games',
+         'UHC Duels', 'WOBTAFITV', 'PvP', 'Non-PvP']
+shortGames = ['BW', 'BD', 'BB', 'MW', 'PD', 'PG', 'SW',
+              # 'SG',
+              'UD', 'WO', "PvP", 'nP']
 
 # imports premade teams
 df2 = pd.read_csv('tryTeams.csv')
@@ -134,8 +138,9 @@ nonPvPPoints = [i for i in nonPvPPoints if i[0] in playing]
 # Catches inactive players
 allPoints = [overallPoints, bedwarsPoints, bridgeDuelsPoints, buildBattlePoints, miniWallsPoints, parkourDuelsPoints, partyGamesPoints, skywarsPoints, survivalGamesPoints, uhcDuelsPoints, wobtafitvPoints, pvpPoints, nonPvPPoints]
 for i in allPoints:
-    if None in i:
-        raise ValueError(f'Player is not in {i}!')
+    for j in i:
+        if None in i:
+            raise ValueError(f'Player is not in {i}!')
 
 # creates dictionaries for every game
 overallD = dict(overallPoints)
@@ -317,9 +322,12 @@ for i in team4:
     t4pvp.append(pt)
     pt = nonPvPD.get(i)
     t4nonPvP.append(pt)
+# Checks that all player names are valid:
+
 
 # Calculates game average points for each team
-
+stats = [t1pvp, t2pvp, t3pvp, t4pvp]
+print(stats)
 overallPointAverages = [round(sum(t1overall)/4, 2), round(sum(t2overall)/4, 2), round(sum(t3overall)/4, 2), round(sum(t4overall)/4, 2)]
 bedwarsPointAverages = [round(sum(t1bedwars)/4, 2), round(sum(t2bedwars)/4, 2), round(sum(t3bedwars)/4, 2), round(sum(t4bedwars)/4, 2)]
 bridgeDuelsPointAverages = [round(sum(t1bridgeDuels)/4, 2), round(sum(t2bridgeDuels)/4, 2), round(sum(t3bridgeDuels)/4, 2), round(sum(t4bridgeDuels)/4, 2)]
@@ -328,10 +336,10 @@ miniWallsPointAverages = [round(sum(t1miniWalls)/4, 2), round(sum(t2miniWalls)/4
 parkourDuelsPointAverages = [round(sum(t1parkourDuels)/4, 2), round(sum(t2parkourDuels)/4, 2), round(sum(t3parkourDuels)/4, 2), round(sum(t4parkourDuels)/4, 2)]
 partyGamesPointAverages = [round(sum(t1partyGames)/4, 2), round(sum(t2partyGames)/4, 2), round(sum(t3partyGames)/4, 2), round(sum(t4partyGames)/4, 2)]
 skywarsPointAverages = [round(sum(t1skywars)/4, 2), round(sum(t2skywars)/4, 2), round(sum(t3skywars)/4, 2), round(sum(t4skywars)/4, 2)]
-survivalGamesPointAverages = [round(sum(t1survivalGames)/4, 2), round(sum(t2survivalGames)/4, 2), round(sum(t3survivalGames)/4, 2), round(sum(t4survivalGames)/4, 2)]
+# survivalGamesPointAverages = [round(sum(t1survivalGames)/4, 2), round(sum(t2survivalGames)/4, 2), round(sum(t3survivalGames)/4, 2), round(sum(t4survivalGames)/4, 2)]
 uhcDuelsPointAverages = [round(sum(t1uhcDuels)/4, 2), round(sum(t2uhcDuels)/4, 2), round(sum(t3uhcDuels)/4, 2), round(sum(t4uhcDuels)/4, 2)]
 wobtafitvPointAverages = [round(sum(t1wobtafitv)/4, 2), round(sum(t2wobtafitv)/4, 2), round(sum(t3wobtafitv)/4, 2), round(sum(t4wobtafitv)/4, 2)]
-pvpPointAverages = [round(sum(t1pvp)/(4*pvpGames), 2), round(sum(t2pvp)/(4*pvpGames), 2), round(sum(t3pvp)/(4*pvpGames), 2), round(sum(t4pvp)/(4*pvpGames), 2)]
+pvpPointAverages = [round(sum(t1pvp)/4, 2), round(sum(t2pvp)/4, 2), round(sum(t3pvp)/4, 2), round(sum(t4pvp)/4, 2)]
 nonPvPPointAverages = [round(sum(t1nonPvP)/(4*nonPvPGames), 2), round(sum(t2nonPvP)/(4*nonPvPGames), 2), round(sum(t3nonPvP)/(4*nonPvPGames), 2), round(sum(t4nonPvP)/(4*nonPvPGames), 2)]
 
 # Combines each team's averages by gamemode
@@ -343,10 +351,10 @@ miniWallsAverages = [('Team 1', round(sum(t1miniWalls)/4, 2)), ('Team 2', round(
 parkourDuelsAverages = [('Team 1', round(sum(t1parkourDuels)/4, 2)), ('Team 2', round(sum(t2parkourDuels)/4, 2)), ('Team 3', round(sum(t3parkourDuels)/4, 2)), ('Team 4', round(sum(t4parkourDuels)/4, 2))]
 partyGamesAverages = [('Team 1', round(sum(t1partyGames)/4, 2)), ('Team 2', round(sum(t2partyGames)/4, 2)), ('Team 3', round(sum(t3partyGames)/4, 2)), ('Team 4', round(sum(t4partyGames)/4, 2))]
 skywarsAverages = [('Team 1', round(sum(t1skywars)/4, 2)), ('Team 2', round(sum(t2skywars)/4, 2)), ('Team 3', round(sum(t3skywars)/4, 2)), ('Team 4', round(sum(t4skywars)/4, 2))]
-survivalGamesAverages = [('Team 1', round(sum(t1survivalGames)/4, 2)), ('Team 2', round(sum(t2survivalGames)/4, 2)), ('Team 3', round(sum(t3survivalGames)/4, 2)), ('Team 4', round(sum(t4survivalGames)/4, 2))]
+# survivalGamesAverages = [('Team 1', round(sum(t1survivalGames)/4, 2)), ('Team 2', round(sum(t2survivalGames)/4, 2)), ('Team 3', round(sum(t3survivalGames)/4, 2)), ('Team 4', round(sum(t4survivalGames)/4, 2))]
 uhcDuelsAverages = [('Team 1', round(sum(t1uhcDuels)/4, 2)), ('Team 2', round(sum(t2uhcDuels)/4, 2)), ('Team 3', round(sum(t3uhcDuels)/4, 2)), ('Team 4', round(sum(t4uhcDuels)/4, 2))]
 wobtafitvAverages = [('Team 1', round(sum(t1wobtafitv)/4, 2)), ('Team 2', round(sum(t2wobtafitv)/4, 2)), ('Team 3', round(sum(t3wobtafitv)/4, 2)), ('Team 4', round(sum(t4wobtafitv)/4, 2))]
-pvpAverages = [('Team 1', round(sum(t1pvp)/(4*pvpGames), 2)), ('Team 2', round(sum(t2pvp)/(4*pvpGames), 2)), ('Team 3', round(sum(t3pvp)/(4*pvpGames), 2)), ('Team 4', round(sum(t4pvp)/(4*6), 2))]
+pvpAverages = [('Team 1', round(sum(t1pvp)/4, 2)), ('Team 2', round(sum(t2pvp)/4, 2)), ('Team 3', round(sum(t3pvp)/4, 2)), ('Team 4', round(sum(t4pvp)/4, 2))]
 nonPvPAverages = [('Team 1', round(sum(t1nonPvP)/(4*nonPvPGames), 2)), ('Team 2', round(sum(t2nonPvP)/(4*nonPvPGames), 2)), ('Team 3', round(sum(t3nonPvP)/(4*nonPvPGames), 2)), ('Team 4', round(sum(t4nonPvP)/(4*nonPvPGames), 2))]
 
 # Prints results
@@ -359,7 +367,7 @@ if output:
     print('Parkour Duels:', parkourDuelsAverages)
     print('Party Games:', partyGamesAverages)
     print('Skywars:', skywarsAverages)
-    print('Survival Games:', survivalGamesAverages)
+    #print('Survival Games:', survivalGamesAverages)
     print('UHC Duels:', uhcDuelsAverages)
     print('WOBTAFITV:', wobtafitvAverages)
     print('PvP:', pvpAverages)
@@ -385,7 +393,7 @@ if graphAll:
     axs[2, 1].set_title('Party Games')
     axs[0, 2].bar(labels, skywarsPointAverages, color=colorOrder)
     axs[0, 2].set_title('Skywars')
-    axs[1, 2].bar(labels, survivalGamesPointAverages, color=colorOrder)
+    #axs[1, 2].bar(labels, survivalGamesPointAverages, color=colorOrder)
     axs[1, 2].set_title('Survival Games')
     axs[2, 2].bar(labels, uhcDuelsPointAverages, color=colorOrder)
     axs[2, 2].set_title('UHC Duels')
@@ -416,18 +424,28 @@ miniWallsAverage = round(((sum(t1miniWalls)+sum(t2miniWalls)+sum(t3miniWalls)+su
 parkourDuelsAverage = round(((sum(t1parkourDuels)+sum(t2parkourDuels)+sum(t3parkourDuels)+sum(t4parkourDuels))/4), 2)
 partyGamesAverage = round(((sum(t1partyGames)+sum(t2partyGames)+sum(t3partyGames)+sum(t4partyGames))/4), 2)
 skywarsAverage = round(((sum(t1skywars)+sum(t2skywars)+sum(t3skywars)+sum(t4skywars))/4), 2)
-survivalGamesAverage = round(((sum(t1survivalGames)+sum(t2survivalGames)+sum(t3survivalGames)+sum(t4survivalGames))/4), 2)
+#survivalGamesAverage = round(((sum(t1survivalGames)+sum(t2survivalGames)+sum(t3survivalGames)+sum(t4survivalGames))/4), 2)
 uhcDuelsAverage = round(((sum(t1uhcDuels)+sum(t2uhcDuels)+sum(t3uhcDuels)+sum(t4uhcDuels))/4), 2)
 wobtafitvAverage =round(((sum(t1wobtafitv)+sum(t2wobtafitv)+sum(t3wobtafitv)+sum(t4wobtafitv))/4), 2)
 pvpAverage =round(((sum(t1pvp)+sum(t2pvp)+sum(t3pvp)+sum(t4pvp))/4), 2)
 nonPvPAverage =round(((sum(t1nonPvP)+sum(t2nonPvP)+sum(t3nonPvP)+sum(t4nonPvP))/4), 2)
 
-allAverages = np.round([bedwarsAverage, bridgeDuelsAverage, buildBattleAverage, miniWallsAverage, parkourDuelsAverage, partyGamesAverage, skywarsAverage, survivalGamesAverage, uhcDuelsAverage, wobtafitvAverage, pvpAverage, nonPvPAverage])
+allAverages = np.round([bedwarsAverage, bridgeDuelsAverage, buildBattleAverage, miniWallsAverage, parkourDuelsAverage, partyGamesAverage, skywarsAverage,
+                        # survivalGamesAverage,
+                        uhcDuelsAverage, wobtafitvAverage, pvpAverage, nonPvPAverage])
 
-t1Averages = np.round([sum(t1bedwars), sum(t1bridgeDuels), sum(t1buildBattle), sum(t1miniWalls), sum(t1parkourDuels), sum(t1partyGames), sum(t1skywars), sum(t1survivalGames), sum(t1uhcDuels), sum(t1wobtafitv), sum(t1pvp), sum(t1nonPvP)])
-t2Averages = np.round([sum(t2bedwars), sum(t2bridgeDuels), sum(t2buildBattle), sum(t2miniWalls), sum(t2parkourDuels), sum(t2partyGames), sum(t2skywars), sum(t2survivalGames), sum(t2uhcDuels), sum(t2wobtafitv), sum(t2pvp), sum(t2nonPvP)])
-t3Averages = np.round([sum(t3bedwars), sum(t3bridgeDuels), sum(t3buildBattle), sum(t3miniWalls), sum(t3parkourDuels), sum(t3partyGames), sum(t3skywars), sum(t3survivalGames), sum(t3uhcDuels), sum(t3wobtafitv), sum(t3pvp), sum(t3nonPvP)])
-t4Averages = np.round([sum(t4bedwars), sum(t4bridgeDuels), sum(t4buildBattle), sum(t4miniWalls), sum(t4parkourDuels), sum(t4partyGames), sum(t4skywars), sum(t4survivalGames), sum(t4uhcDuels), sum(t4wobtafitv), sum(t4pvp), sum(t4nonPvP)])
+t1Averages = np.round([sum(t1bedwars), sum(t1bridgeDuels), sum(t1buildBattle), sum(t1miniWalls), sum(t1parkourDuels), sum(t1partyGames), sum(t1skywars),
+                       # sum(t1survivalGames),
+                       sum(t1uhcDuels), sum(t1wobtafitv), sum(t1pvp), sum(t1nonPvP)])
+t2Averages = np.round([sum(t2bedwars), sum(t2bridgeDuels), sum(t2buildBattle), sum(t2miniWalls), sum(t2parkourDuels), sum(t2partyGames), sum(t2skywars),
+                       # sum(t2survivalGames),
+                       sum(t2uhcDuels), sum(t2wobtafitv), sum(t2pvp), sum(t2nonPvP)])
+t3Averages = np.round([sum(t3bedwars), sum(t3bridgeDuels), sum(t3buildBattle), sum(t3miniWalls), sum(t3parkourDuels), sum(t3partyGames), sum(t3skywars),
+                       #REMOVE sum(t3survivalGames),
+                       sum(t3uhcDuels), sum(t3wobtafitv), sum(t3pvp), sum(t3nonPvP)])
+t4Averages = np.round([sum(t4bedwars), sum(t4bridgeDuels), sum(t4buildBattle), sum(t4miniWalls), sum(t4parkourDuels), sum(t4partyGames), sum(t4skywars),
+                       #REMOVE sum(t4survivalGames),
+                       sum(t4uhcDuels), sum(t4wobtafitv), sum(t4pvp), sum(t4nonPvP)])
 
 # Calculates advantages (point differentials)
 t1Differentials = [i - j for (i, j) in zip(t1Averages, allAverages)]
@@ -452,13 +470,13 @@ if graphDifferentials:
     fig.suptitle('Point Differentials for All Teams')
     fig.tight_layout()
     axs[0, 0].bar(shortGames, t1Differentials, color=colorOrder[0])
-    axs[0, 0].set_title('Red Team')
+    axs[0, 0].set_title(colorOrder[0])
     axs[0, 1].bar(shortGames, t2Differentials, color=colorOrder[1])
-    axs[0, 1].set_title('Yellow Team')
+    axs[0, 1].set_title(colorOrder[1])
     axs[1, 0].bar(shortGames, t3Differentials, color=colorOrder[2])
-    axs[1, 0].set_title('Green Team')
+    axs[1, 0].set_title(colorOrder[2])
     axs[1, 1].bar(shortGames, t4Differentials, color=colorOrder[3])
-    axs[1, 1].set_title('Blue Team')
+    axs[1, 1].set_title(colorOrder[3])
     plt.show()
 if printDifferentials:
     differentials = [sum(t1Differentials), sum(t2Differentials), sum(t3Differentials), sum(t4Differentials)]
@@ -468,4 +486,9 @@ t2AbsDiff = sum([abs(i) for i in t2Differentials])
 t3AbsDiff = sum([abs(i) for i in t3Differentials])
 t4AbsDiff = sum([abs(i) for i in t4Differentials])
 absDiff = [t1AbsDiff, t2AbsDiff, t3AbsDiff, t4AbsDiff]
-print(absDiff)
+if displayGameAverages:
+    print(allAverages)
+    print(np.std(allAverages))
+    plt.bar(games, allAverages)
+    plt.title('Average Points For Each Game')
+    plt.show()
